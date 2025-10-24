@@ -9,32 +9,41 @@
   --text-primary: #2F323F;
   --text-secondary: #71717a;
   --text-muted: #a1a1aa;
-  
-  /* Colors */
+
+  /* Core base colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Header and overlays */
+  --overlay-strong: rgba(0, 0, 0, 0.60);
+  --overlay-mid: rgba(0, 0, 0, 0.20);
+  --overlay-transparent: rgba(0, 0, 0, 0);
+
+  /* Surfaces / rings */
   --nav-bg: #ffffff;
   --nav-border: rgba(0, 0, 0, 0.05);
+  --ring-black-10: rgba(0, 0, 0, 0.10);
+  --ring-white-20: rgba(255, 255, 255, 0.20);
+
+  /* Common background opacities */
+  --bg-white-90: rgba(255, 255, 255, 0.90);
+  --bg-white-80: rgba(255, 255, 255, 0.80);
+  --bg-white-75: rgba(255, 255, 255, 0.75);
+  --bg-white-70: rgba(255, 255, 255, 0.70);
+  --bg-white-15: rgba(255, 255, 255, 0.15);
+  --bg-white-10: rgba(255, 255, 255, 0.10);
+  --bg-black-10: rgba(0, 0, 0, 0.10);
+  --bg-black-5: rgba(0, 0, 0, 0.05);
+
+  /* CTA / buttons */
   --button-primary: #18181b;
   --button-primary-text: #ffffff;
   --upload-placeholder: #a1a1aa;
 
-  /* Hero gradient (editable) */
-  /* --hero-gradient-center: #F5F3F3;
-  --hero-gradient-edge: #6FA3AA; */
-
-  --hero-gradient-center: #ffffff;
-  --hero-gradient-edge: #bcd6e8;
-
-  /* How it Works section (editable) */
-  --hiw-pill-bg: #bcd6e8;    /* soft yellow */
-  --hiw-pill-text: #2F323F;  /* dark amber */
-  --card1-bg: #bcd6e8;
-  --card2-bg: #bcd6e8;
-  --card3-bg: #bcd6e8;
-  --card-badge-text: #2F323F;
-  --card-icon-bg: #e9e3d4;
-
-  /* Surface pills */
-  --surface-pill-bg: rgba(255, 255, 255, 0.90);
+  /* Component accents */
+  --progress-blue: #8db5ff;
+  --outline-color-1: #64a3eb;
+  --outline-color-2: #16A34A;
 }
 
 @theme inline {
@@ -73,7 +82,7 @@ body {
   inset: 0;
   border-radius: inherit;
   padding: 2px; /* border thickness */
-  background-image: conic-gradient(from var(--angle), #64a3eb, #16A34A, #64a3eb);
+  background-image: conic-gradient(from var(--angle), var(--outline-color-1), var(--outline-color-2), var(--outline-color-1));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
           mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
