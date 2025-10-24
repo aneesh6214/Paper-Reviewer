@@ -121,14 +121,15 @@ export default function PDFDragDrop({ onFileSelect, className = "" }: PDFDragDro
         </div>
 
         {selectedFile && (
-          <motion.button
-            className="animated-outline mt-6 rounded-full px-8 py-3 text-sm font-medium shadow-[inset_0_-4px_12px_rgba(255,255,255,0.12)] hover:bg-black"
-            style={{backgroundColor: 'var(--button-primary)', color: 'var(--button-primary-text)'}}
+          <motion.a
+            href="/review"
+            className="inline-block mt-6 rounded-full px-8 py-3 text-sm font-medium shadow-[inset_0_-4px_12px_rgba(255,255,255,0.12)] hover:brightness-95"
+            style={{backgroundColor: 'var(--progress-blue)', color: 'var(--color-white)'}}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
             Review Paper
-          </motion.button>
+          </motion.a>
         )}
       </div>
     </div>

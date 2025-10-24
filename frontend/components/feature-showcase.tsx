@@ -58,7 +58,7 @@ export default function FeatureShowcase() {
   };
 
   return (
-    <div id="about" className="mx-auto max-w-5xl px-6 sm:px-8">
+    <div id="about" className="mx-auto max-w-5xl px-6 sm:px-8 scroll-mt-24">
       {/* Boxes (table-style connected grid) */}
       <div className="rounded-2xl border border-[color:var(--ring-black-10)] overflow-hidden bg-[color:var(--bg-white-80)] relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-black/10">

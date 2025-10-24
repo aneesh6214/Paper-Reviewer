@@ -45,12 +45,12 @@ export default function Header({ onTryNowClick }: HeaderProps) {
                 <Link href="/" className="text-[17px] font-medium tracking-tight">PREreview</Link>
               </div>
               <div className="flex justify-center">
-                <Link href="/about" className="text-[15px] font-semibold opacity-90 hover:opacity-100">About</Link>
+                <Link href="#about" className="text-[15px] font-semibold opacity-90 hover:opacity-100">About</Link>
               </div>
               <div className="flex justify-end">
-                <a href="#try" onClick={handleTryNow} className="rounded-full px-4 py-2 text-[13px] font-medium shadow-[inset_0_-4px_12px_rgba(0,0,0,0.05)] ring-1 ring-[var(--ring-white-20)] bg-[color:var(--bg-white-10)] hover:bg-[color:var(--bg-white-15)]">
+                <Link href="/review" className="rounded-full px-4 py-2 text-[13px] font-medium shadow-[inset_0_-4px_12px_rgba(0,0,0,0.05)] ring-1 ring-[var(--ring-white-20)] bg-[color:var(--bg-white-10)] hover:bg-[color:var(--bg-white-15)]">
                   Try Now
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -71,16 +71,16 @@ export default function Header({ onTryNowClick }: HeaderProps) {
                 <Link href="/" className="text-[17px] font-medium tracking-tight">PREreview</Link>
               </div>
                 <div className="flex justify-center">
-                  <Link href="/about" className="text-[15px] font-semibold opacity-90 hover:opacity-100">About</Link>
+                  <Link href="#about" className="text-[15px] font-semibold opacity-90 hover:opacity-100">About</Link>
               </div>
               <div className="flex justify-end">
-                <a
-                  href="#try"
-                  onClick={handleTryNow}
-                  className="rounded-full px-4 py-2 text-[13px] font-medium shadow-[inset_0_-4px_12px_rgba(0,0,0,0.05)] ring-1 ring-[var(--ring-black-10)] bg-[color:var(--bg-black-5)] hover:bg-black/10"
-                >
-                  Try Now
-                </a>
+                  <Link
+                    href="/review"
+                    className="rounded-full px-4 py-2 text-[13px] font-medium shadow-[inset_0_-4px_12px_rgba(0,0,0,0.05)]"
+                    style={{ backgroundColor: 'var(--progress-blue)', color: 'var(--color-white)'}}
+                  >
+                    Try Now
+                  </Link>
               </div>
             </div>
           </div>
