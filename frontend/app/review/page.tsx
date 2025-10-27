@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { marked } from "marked";
 import Header from "../../components/header";
 import PDFDragDrop from "../../components/pdf-drag-drop";
+import InfoPopup from "../../components/info-popup";
 
 interface PendingPDFData {
   name: string;
@@ -27,6 +29,7 @@ export default function ReviewPage() {
   const [conversionState, setConversionState] = useState<ConversionState>('upload');
   const [isInitializing, setIsInitializing] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
+  const [showWelcomePopup, setShowWelcomePopup] = useState(true);
   const [isEditingMarkdown, setIsEditingMarkdown] = useState(false);
   const [markdownContent, setMarkdownContent] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -134,6 +137,13 @@ export default function ReviewPage() {
   useEffect(() => {
     setHasMounted(true);
     
+    // Listen for custom event to show popup
+    const handleShowPopup = () => {
+      setShowWelcomePopup(true);
+    };
+    
+    window.addEventListener('showWelcomePopup', handleShowPopup);
+    
     const checkPendingUpload = async () => {
       const pendingData = localStorage.getItem('pendingPDFUpload');
       if (pendingData) {
@@ -169,10 +179,25 @@ export default function ReviewPage() {
     };
 
     checkPendingUpload();
+    
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener('showWelcomePopup', handleShowPopup);
+    };
   }, []);
 
   return (
     <div className="relative min-h-dvh" style={{ color: 'var(--text-primary)' }}>
+      {/* Welcome Popup */}
+      <InfoPopup
+        isOpen={showWelcomePopup}
+        onClose={() => setShowWelcomePopup(false)}
+        mediaSrc="/Placeholder Video.mp4"
+        mediaAlt="Customizing Reviews"
+        description="Use the scorecard on the left to define specific evaluation criteria for your paper. Upload your PDF on the right to begin the review process."
+        buttonText="Ready"
+        isVideo={true}
+      />
       {/* Background Image */}
       <img 
         src="/landing-bg.jpg" 
@@ -183,11 +208,12 @@ export default function ReviewPage() {
       {/* Header Gradient Overlay - only for header area */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-56 -z-0 bg-gradient-to-b from-[var(--overlay-strong)] via-[var(--overlay-mid)] to-transparent" />
       
-      <Header buttonText="Begin Review" buttonHref="#" />
-      <main className="relative z-10 mx-auto max-w-7xl px-8 pt-20 pb-8">
+      <Header buttonText="Begin Review" buttonHref="#" title="Configure Your Review" />
+      
+      <main className="relative z-10 mx-auto max-w-7xl px-8 pt-32 pb-16 h-screen overflow-hidden">
 
         {/* Two Column Layout - 35/65 ratio */}
-        <div className="grid gap-6 h-[calc(100vh-120px)]" style={{ gridTemplateColumns: '35fr 65fr' }}>
+        <div className="grid gap-6 h-[calc(100vh-180px)]" style={{ gridTemplateColumns: '35fr 65fr' }}>
           {/* Left Column - Scorecard */}
           <div className="bg-white/80 backdrop-blur-sm rounded-lg overflow-hidden flex flex-col">
             {/* Header with Add Button */}
@@ -400,9 +426,12 @@ export default function ReviewPage() {
                         placeholder="Edit your markdown content here..."
                       />
                     ) : (
-                      <div className="text-sm text-[color:var(--text-primary)] leading-relaxed whitespace-pre-wrap">
-                        {markdownContent}
-                      </div>
+                      <div 
+                        className="markdown-content text-sm"
+                        dangerouslySetInnerHTML={{ 
+                          __html: markdownContent ? marked(markdownContent) : '<p style="color: var(--gray-500); font-style: italic;">Your converted document will appear here...</p>' 
+                        }}
+                      />
                     )}
                   </div>
                 </div>
