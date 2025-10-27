@@ -30,6 +30,7 @@
   --bg-white-80: rgba(255, 255, 255, 0.80);
   --bg-white-75: rgba(255, 255, 255, 0.75);
   --bg-white-70: rgba(255, 255, 255, 0.70);
+  --bg-white-60: rgba(255, 255, 255, 0.60);
   --bg-white-15: rgba(255, 255, 255, 0.15);
   --bg-white-10: rgba(255, 255, 255, 0.10);
   --bg-black-10: rgba(0, 0, 0, 0.10);
@@ -44,6 +45,29 @@
   --progress-blue: #438ceb;
   --outline-color-1: #64a3eb;
   --outline-color-2: #16A34A;
+  
+  /* Status colors */
+  --success-green: #059669;
+  --success-green-bg: #c0eed6;
+  --error-red: #dc2626;
+  --error-red-bg: #fef2f2;
+  
+  /* UI grays */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  
+  /* Blue variants */
+  --blue-50: #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-300: #93c5fd;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
 }
 
 @theme inline {
