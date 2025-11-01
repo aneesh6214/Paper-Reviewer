@@ -8,9 +8,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Step Habits",
+  title: "PREreview - AI Paper Review",
   description:
-    "Genuine self-improvement. A companion for reaching your personal goals.",
+    "Get conference-quality reviews of your academic papers in minutes. Upload, analyze, and improve with actionable feedback.",
 };
 
 export default function RootLayout({

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Header from "../components/header";
 import PDFUpload from "../components/pdf-upload";
@@ -11,10 +11,30 @@ import FeatureShowcase from "../components/feature-showcase";
 
 export default function Home() {
   const uploadRef = useRef<HTMLDivElement>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFileSelect = (file: File | null) => {
     console.log("Selected file:", file);
-    // Handle file selection logic here
+    setSelectedFile(file);
+  };
+
+  const handleStartReview = async (file: File) => {
+    // Convert file to base64 and store in localStorage for review page
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      const fileData = {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        data: base64,
+        timestamp: Date.now()
+      };
+      
+      localStorage.setItem('pendingPDFUpload', JSON.stringify(fileData));
+      window.location.href = '/review';
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleTryNow = () => {
@@ -59,13 +79,17 @@ export default function Home() {
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}
-            className="mt-12"
+            className="mt-12 mx-auto max-w-2xl h-64"
           >
-            <PDFDragDrop onFileSelect={handleFileSelect} />
+            <PDFDragDrop 
+              onFileSelect={handleFileSelect} 
+              onConvert={selectedFile ? () => handleStartReview(selectedFile) : undefined}
+              className="h-full"
+            />
           </motion.div>
 
           {/* Logo marquee */}
-          <div className="mt-12">
+          <div className="mt-16">
             <LogoMarquee />
           </div>
         </div>
