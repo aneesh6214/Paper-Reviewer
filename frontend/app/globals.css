@@ -31,6 +31,8 @@
   --bg-white-75: rgba(255, 255, 255, 0.75);
   --bg-white-70: rgba(255, 255, 255, 0.70);
   --bg-white-60: rgba(255, 255, 255, 0.60);
+  /* Review page unified card background */
+  --review-card-bg: rgba(255, 255, 255, 0.70);
   --bg-white-15: rgba(255, 255, 255, 0.15);
   --bg-white-10: rgba(255, 255, 255, 0.10);
   --bg-black-10: rgba(0, 0, 0, 0.10);
@@ -266,4 +268,25 @@ body {
 
 .markdown-content em {
   font-style: italic;
+}
+
+/* Clean custom scrollbar for scorecards column */
+.clean-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-300) transparent;
+}
+.clean-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.clean-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.clean-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--gray-300);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.clean-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--gray-400);
 }

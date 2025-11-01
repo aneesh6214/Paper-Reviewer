@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface InfoPopupProps {
   isOpen: boolean;
@@ -21,8 +21,7 @@ export default function InfoPopup({
   buttonText = "Ready",
   isVideo = false
 }: InfoPopupProps) {
-  const [mediaWidth, setMediaWidth] = useState<number>(0);
-
+  const [mediaAspectRatio, setMediaAspectRatio] = useState<number | null>(null);
   // Close popup on escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -54,43 +53,53 @@ export default function InfoPopup({
         backgroundColor: 'rgba(0, 0, 0, 0.4)'
       }}
     >
-      <div className="flex flex-col items-center max-w-4xl">
-        {/* Media (Image or Video) */}
-        {isVideo ? (
-          <video
-            src={mediaSrc}
-            className="max-w-full h-auto rounded-2xl shadow-lg mb-6"
-            autoPlay
-            loop
-            muted
-            playsInline
-            onLoadedMetadata={(e) => {
-              const video = e.target as HTMLVideoElement;
-              setMediaWidth(video.offsetWidth);
-            }}
-          />
-        ) : (
-          <img 
-            src={mediaSrc}
-            alt={mediaAlt}
-            className="max-w-full h-auto rounded-2xl shadow-lg mb-6"
-            onLoad={(e) => {
-              const img = e.target as HTMLImageElement;
-              setMediaWidth(img.offsetWidth);
-            }}
-          />
-        )}
+      <div className="flex flex-col items-center max-w-4xl w-full">
+        {/* Media (Image or Video) - reserved space to prevent layout shift */}
+        <div 
+          className="w-full rounded-2xl shadow-lg mb-6 overflow-hidden"
+          style={{ 
+            aspectRatio: mediaAspectRatio ? mediaAspectRatio : '16 / 9'
+          }}
+        >
+          {isVideo ? (
+            <video
+              src={mediaSrc}
+              className="w-full h-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+              onLoadedMetadata={(e) => {
+                const video = e.currentTarget as HTMLVideoElement;
+                if (video.videoWidth && video.videoHeight) {
+                  setMediaAspectRatio(video.videoWidth / video.videoHeight);
+                }
+              }}
+            />
+          ) : (
+            <img 
+              src={mediaSrc}
+              alt={mediaAlt}
+              className="w-full h-full object-cover"
+              onLoad={(e) => {
+                const img = e.currentTarget as HTMLImageElement;
+                if (img.naturalWidth && img.naturalHeight) {
+                  setMediaAspectRatio(img.naturalWidth / img.naturalHeight);
+                }
+              }}
+            />
+          )}
+        </div>
         
         {/* Description Box */}
         <div 
-          className="rounded-2xl p-6 flex items-center gap-6" 
+          className="rounded-2xl p-6 flex items-center gap-6 w-full" 
           style={{ 
             backgroundColor: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             border: '1px solid rgba(255, 255, 255, 0.3)',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-            width: mediaWidth > 0 ? `${mediaWidth}px` : 'auto'
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
           }}
         >
           <p className="flex-1 text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
