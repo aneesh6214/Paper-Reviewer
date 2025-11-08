@@ -1,41 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import Header from "../components/header";
-import PDFUpload from "../components/pdf-upload";
-import PDFDragDrop from "../components/pdf-drag-drop";
+import EmailSignup from "../components/email-signup";
 import LogoMarquee from "../components/logo-marquee";
 import FeatureShowcase from "../components/feature-showcase";
 
 export default function Home() {
   const uploadRef = useRef<HTMLDivElement>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const handleFileSelect = (file: File | null) => {
-    console.log("Selected file:", file);
-    setSelectedFile(file);
-  };
-
-  const handleStartReview = async (file: File) => {
-    // Convert file to base64 and store in localStorage for review page
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64 = reader.result as string;
-      const fileData = {
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        data: base64,
-        timestamp: Date.now()
-      };
-      
-      localStorage.setItem('pendingPDFUpload', JSON.stringify(fileData));
-      window.location.href = '/review';
-    };
-    reader.readAsDataURL(file);
-  };
 
   const handleTryNow = () => {
     uploadRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -44,18 +17,20 @@ export default function Home() {
   return (
     <div className="relative min-h-dvh bg-white font-sans" style={{color: 'var(--text-primary)'}}>
       {/* Global fixed header above all sections */}
-      <Header onTryNowClick={handleTryNow} />
+      <Header buttonHref="#" />
       {/* New full-bleed hero with background image and fades */}
       <section className="relative isolate overflow-hidden min-h-[85vh]">
-        {/* Background image */}
-        <img src="/landing-bg.jpg" alt="Hero background" className="absolute inset-0 -z-10 h-full w-full object-cover" />
-        {/* Top black fade for header readability */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-56 -z-0 bg-gradient-to-b from-[var(--overlay-strong)] via-[var(--overlay-mid)] to-transparent" />
-        {/* Bottom fade to page background */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 -z-0 bg-gradient-to-t from-[var(--color-white)] to-transparent" />
+        {/* Background wrapper with image and fades */}
+        <div className="absolute inset-x-0 top-0 -z-10 h-[85vh] w-full">
+          <img src="/landing-bg.jpg" alt="Hero background" className="absolute inset-0 h-full w-full object-cover" />
+          {/* Top black fade for header readability */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-[var(--overlay-strong)] via-[var(--overlay-mid)] to-transparent" />
+          {/* Subtle bottom fade - positioned relative to the 85vh container */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white via-white/40 to-transparent" />
+        </div>
 
         {/* Hero content */}
-        <div className="mx-auto max-w-5xl px-6 sm:px-8 pt-28 pb-36 text-center">
+        <div className="relative z-10 mx-auto max-w-5xl px-6 sm:px-8 pt-28 pb-24 text-center">
           <motion.h1
             className="text-[88px] sm:text-[96px] font-medium tracking-tight text-white"
             initial={{ opacity: 0, y: 32 }}
@@ -79,24 +54,19 @@ export default function Home() {
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}
-            className="mt-12 mx-auto max-w-2xl h-64"
+            className="mt-12 mx-auto max-w-2xl"
           >
-            <PDFDragDrop 
-              onFileSelect={handleFileSelect} 
-              onConvert={selectedFile ? () => handleStartReview(selectedFile) : undefined}
-              className="h-full"
-            />
+            <EmailSignup />
           </motion.div>
-
-          {/* Logo marquee */}
           <div className="mt-16">
-            <LogoMarquee />
+            <div className="mx-auto max-w-5xl">
+              <LogoMarquee />
+            </div>
+            <div className="mt-16">
+              <FeatureShowcase />
+            </div>
           </div>
         </div>
-      </section>
-      {/* Feature showcase replaces How it Works */}
-      <section className="mx-auto mb-4 max-w-[1600px] px-6 md:px-16">
-        <FeatureShowcase />
       </section>
 
       {/* Footer removed as requested */}

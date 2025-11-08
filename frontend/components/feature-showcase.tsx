@@ -55,6 +55,12 @@ export default function FeatureShowcase() {
         setActive((i) => (i + 1) % features.length);
       }, AUTOPLAY_MS);
     }
+    // Scroll to bottom on item click (teaser behavior)
+    try {
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
+    } catch {}
   };
 
   return (

@@ -70,6 +70,10 @@
   --blue-300: #93c5fd;
   --blue-600: #2563eb;
   --blue-700: #1d4ed8;
+
+  /* Results page accents */
+  --highlight-yellow: #fff7ae;
+  --highlight-yellow-strong: #ffef6e;
 }
 
 @theme inline {
