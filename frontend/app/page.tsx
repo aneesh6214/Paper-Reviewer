@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import Header from "../components/header";
@@ -30,7 +31,7 @@ export default function Home() {
         </div>
 
         {/* Hero content */}
-        <div className="relative z-10 mx-auto max-w-5xl px-6 sm:px-8 pt-28 pb-24 text-center">
+        <div className="relative z-10 mx-auto max-w-5xl px-6 sm:px-8 pt-28 pb-4 text-center">
           <motion.h1
             className="text-[88px] sm:text-[96px] font-medium tracking-tight text-white"
             initial={{ opacity: 0, y: 32 }}
@@ -58,6 +59,18 @@ export default function Home() {
           >
             <EmailSignup />
           </motion.div>
+          <motion.p
+            className="mt-4 text-xs sm:text-sm text-white/80"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.45 }}
+          >
+            By subscribing you agree to recieve updates from PaperGrader and to our{" "}
+            <Link href="/privacy" className="underline decoration-white/60 underline-offset-4 hover:decoration-white">
+              Privacy Policy
+            </Link>
+            .
+          </motion.p>
           <div className="mt-16">
             <div className="mx-auto max-w-5xl">
               <LogoMarquee />
@@ -68,8 +81,19 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Footer removed as requested */}
+      <footer className="border-t border-black/10 bg-white/80 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-5xl flex-col gap-2 px-6 py-6 text-xs sm:flex-row sm:items-center sm:justify-between sm:text-sm" style={{ color: 'var(--text-secondary)' }}>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
+            <a href="https://arxiv.org/abs/2412.11948" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">
+              Powered by OpenReviewer
+            </a>
+            <span>Built with Llama</span>
+          </div>
+          <a href="mailto:mypapergrader@gmail.com" className="hover:text-black transition-colors">
+            Contact Support
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

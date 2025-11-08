@@ -36,6 +36,7 @@ export default function FeatureShowcase() {
 
   const [active, setActive] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -55,16 +56,22 @@ export default function FeatureShowcase() {
         setActive((i) => (i + 1) % features.length);
       }, AUTOPLAY_MS);
     }
-    // Scroll to bottom on item click (teaser behavior)
     try {
-      if (typeof window !== 'undefined') {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      if (typeof window !== 'undefined' && containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const headerOffset = 120;
+        const target = window.scrollY + rect.top - headerOffset;
+        window.scrollTo({ top: Math.max(target, 0), behavior: 'smooth' });
       }
     } catch {}
   };
 
   return (
-    <div id="about" className="mx-auto max-w-5xl px-6 sm:px-8 scroll-mt-24">
+    <div
+      id="about"
+      ref={containerRef}
+      className="mx-auto max-w-5xl px-6 sm:px-8 scroll-mt-24"
+    >
       {/* Boxes (table-style connected grid) */}
       <div className="rounded-2xl border border-[color:var(--ring-black-10)] overflow-hidden bg-[color:var(--bg-white-80)] relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-black/10">
