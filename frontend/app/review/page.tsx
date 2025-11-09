@@ -116,7 +116,7 @@ export default function ReviewPage() {
     } catch (err) {
       console.error('Conversion error:', err);
       const message = err instanceof Error ? err.message : typeof err === 'string' ? err : 'Unknown error';
-      setErrorMessage(`Network error: ${message}. Please ensure the backend server is running on port 8000.`);
+      setErrorMessage(`We had trouble parsing your PDF. Error: ${message}.`);
       setConversionState('error');
     }
   };
@@ -313,6 +313,7 @@ export default function ReviewPage() {
             hasUnsavedEdits={hasUnsavedMarkdown}
             anyScorecardEditing={anyScorecardEditing}
             onBeginReview={handleBeginReview}
+            onRetry={handleRetry}
           />
         </div>
       </main>

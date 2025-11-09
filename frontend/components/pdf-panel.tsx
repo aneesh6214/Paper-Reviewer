@@ -24,6 +24,7 @@ type PdfPanelProps = {
   hasUnsavedEdits: boolean;
   anyScorecardEditing: boolean;
   onBeginReview: () => void;
+  onRetry: () => void;
 };
 
 export default function PdfPanel(props: PdfPanelProps) {
@@ -45,6 +46,7 @@ export default function PdfPanel(props: PdfPanelProps) {
     hasUnsavedEdits,
     anyScorecardEditing,
     onBeginReview,
+    onRetry,
   } = props;
 
   return (
@@ -123,6 +125,13 @@ export default function PdfPanel(props: PdfPanelProps) {
                 Error: Failed to convert PDF to markdown
               </div>
               <div className="mb-4 text-sm" style={{ color: 'var(--gray-600)' }}>{errorMessage}</div>
+              <button
+                onClick={onRetry}
+                className="rounded-full px-3.5 py-1.5 text-sm font-medium cursor-pointer"
+                style={{ backgroundColor: 'var(--progress-blue)', color: 'var(--color-white)'}}
+              >
+                Try again
+              </button>
             </div>
           </div>
         ) : (
