@@ -22,14 +22,14 @@ export default function FeatureShowcase() {
     },
     {
       id: "score",
-      title: "Conference Scoring",
-      description: "Get clear, rubric‑based scores like major venues.",
+      title: "Configure Your Review",
+      description: "Customize scoring criteria and review process.",
       imageSrc: "/placeholder.webp",
     },
     {
       id: "feedback",
-      title: "Actionable Feedback",
-      description: "Structured suggestions to improve each section.",
+      title: "Score & Feedback",
+      description: "View your scorecard & actionable comments on your paper.",
       imageSrc: "/placeholder.webp",
     },
   ], []);
