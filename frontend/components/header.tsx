@@ -47,7 +47,7 @@ export default function Header({ onTryNowClick, buttonText = "Try Now", buttonHr
             <div className="flex items-center justify-between text-white">
               <Link href="/" className="flex items-center gap-2 hover:underline">
                 <img src="/paper.svg" alt="Paper logo" width={22} height={22} className="block invert brightness-0" />
-                <span className="text-[17px] font-bold tracking-tight">PREreview</span>
+                <span className="text-[17px] font-bold tracking-tight">PaperGrader</span>
               </Link>
               {title && (
                 <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2">
@@ -105,7 +105,7 @@ export default function Header({ onTryNowClick, buttonText = "Try Now", buttonHr
             <div className="flex items-center justify-between" style={{ color: 'var(--text-primary)' }}>
               <Link href="/" className="flex items-center gap-2 hover:underline">
                 <img src="/paper.svg" alt="Paper logo" width={22} height={22} className="block" />
-                <span className="text-[17px] font-bold tracking-tight">PREreview</span>
+                <span className="text-[17px] font-bold tracking-tight">PaperGrader</span>
               </Link>
               {title && (
                 <div className="flex-1 text-center mx-8 flex items-center justify-center gap-2">
@@ -117,9 +117,6 @@ export default function Header({ onTryNowClick, buttonText = "Try Now", buttonHr
                         window.dispatchEvent(new CustomEvent('showWelcomePopup'));
                       }}
                       className="cursor-pointer outline-none p-1 rounded-full transition-colors"
-                      style={{
-                        ':hover': { backgroundColor: 'var(--gray-100)' }
-                      }}
                       onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--gray-50)'}
                       onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       title="Show help"
