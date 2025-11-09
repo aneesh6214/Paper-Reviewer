@@ -9,16 +9,35 @@ interface EmailSignupProps {
 
 export default function EmailSignup({ onSubmit, className = "" }: EmailSignupProps) {
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sent" | "error">("idle");
 
   const handleSubmit = () => {
     const trimmed = email.trim();
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
-    if (!isValid) return;
-    onSubmit?.(trimmed);
-    // For teaser: no backend yet. Keep a lightweight acknowledgement.
-    try {
-      console.log("Interest captured:", trimmed);
-    } catch {}
+    if (!isValid || isSubmitting) return;
+    if (onSubmit) {
+      onSubmit(trimmed);
+      return;
+    }
+    setIsSubmitting(true);
+    setStatus("idle");
+    fetch("/api/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: trimmed })
+    })
+      .then(async (r) => {
+        const data = await r.json().catch(() => ({} as any));
+        if (r.ok && data?.success) {
+          setEmail("");
+          setStatus("sent");
+        } else {
+          setStatus("error");
+        }
+      })
+      .catch(() => setStatus("error"))
+      .finally(() => setIsSubmitting(false));
   };
 
   return (
@@ -39,13 +58,18 @@ export default function EmailSignup({ onSubmit, className = "" }: EmailSignupPro
         </div>
         <button
           onClick={handleSubmit}
-          disabled={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())}
+          disabled={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) || isSubmitting || status === "sent"}
           className="rounded-full px-5 sm:px-6 py-3 text-sm font-medium shadow-[inset_0_-4px_12px_rgba(255,255,255,0.12)] cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
           style={{ backgroundColor: 'var(--progress-blue)', color: 'var(--color-white)' }}
         >
-          I&apos;m Interested
+          {isSubmitting ? "Sending…" : status === "sent" ? "Sent!" : "I\u2019m Interested"}
         </button>
       </div>
+      {status === "error" && (
+        <div className="px-4 pt-1 text-xs" style={{ color: 'var(--error-red)' }}>
+          Something went wrong. Please try again.
+        </div>
+      )}
     </div>
   );
 }
