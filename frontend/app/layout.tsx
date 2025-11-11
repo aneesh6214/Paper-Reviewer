@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "PREreview - AI Paper Review",
+  title: "PaperReviewer",
   description:
     "Get conference-quality reviews of your academic papers in minutes. Upload, analyze, and improve with actionable feedback.",
 };

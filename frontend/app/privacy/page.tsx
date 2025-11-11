@@ -1,3 +1,23 @@
+import type { Metadata } from "next";
+import fs from "fs/promises";
+import path from "path";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "Privacy Policy for our services.",
+};
+
+export default async function PrivacyPage() {
+  const filePath = path.join(process.cwd(), "public", "legal", "privacy-policy.html");
+  const html = await fs.readFile(filePath, "utf8");
+
+  return (
+    <main className="mx-auto max-w-4xl px-6 py-10" style={{ background: "white" }}>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+    </main>
+  );
+}
+
 import fs from "fs";
 import path from "path";
 
