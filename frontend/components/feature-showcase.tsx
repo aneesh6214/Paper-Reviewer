@@ -22,20 +22,21 @@ export default function FeatureShowcase() {
     },
     {
       id: "score",
-      title: "Conference Scoring",
-      description: "Get clear, rubric‑based scores like major venues.",
+      title: "Configure Your Review",
+      description: "Customize scoring criteria and review process.",
       imageSrc: "/placeholder.webp",
     },
     {
       id: "feedback",
-      title: "Actionable Feedback",
-      description: "Structured suggestions to improve each section.",
+      title: "Score & Feedback",
+      description: "View your scorecard & actionable comments on your paper.",
       imageSrc: "/placeholder.webp",
     },
   ], []);
 
   const [active, setActive] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -55,10 +56,22 @@ export default function FeatureShowcase() {
         setActive((i) => (i + 1) % features.length);
       }, AUTOPLAY_MS);
     }
+    try {
+      if (typeof window !== 'undefined' && containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const headerOffset = 120;
+        const target = window.scrollY + rect.top - headerOffset;
+        window.scrollTo({ top: Math.max(target, 0), behavior: 'smooth' });
+      }
+    } catch {}
   };
 
   return (
-    <div id="about" className="mx-auto max-w-5xl px-6 sm:px-8 scroll-mt-24">
+    <div
+      id="about"
+      ref={containerRef}
+      className="mx-auto max-w-5xl px-6 sm:px-8 scroll-mt-24"
+    >
       {/* Boxes (table-style connected grid) */}
       <div className="rounded-2xl border border-[color:var(--ring-black-10)] overflow-hidden bg-[color:var(--bg-white-80)] relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-black/10">

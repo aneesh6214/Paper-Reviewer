@@ -13,8 +13,9 @@ interface HeaderProps {
   showTitleHelpIcon?: boolean; // controls the small help icon next to title
 }
 
-export default function Header({ onTryNowClick, buttonText = "Try Now", buttonHref = "/review", title, onButtonClick, showTitleHelpIcon = true }: HeaderProps) {
+export default function Header({ onTryNowClick, buttonText = "Coming Soon!", buttonHref = "#", title, onButtonClick, showTitleHelpIcon = true }: HeaderProps) {
   const [showPill, setShowPill] = useState(false);
+  const isComingSoon = buttonText === "Coming Soon!";
 
   useEffect(() => {
     const onScroll = () => {
@@ -47,7 +48,7 @@ export default function Header({ onTryNowClick, buttonText = "Try Now", buttonHr
             <div className="flex items-center justify-between text-white">
               <Link href="/" className="flex items-center gap-2 hover:underline">
                 <img src="/paper.svg" alt="Paper logo" width={22} height={22} className="block invert brightness-0" />
-                <span className="text-[17px] font-bold tracking-tight">PREreview</span>
+                <span className="text-[17px] font-bold tracking-tight">PaperReviewer</span>
               </Link>
               {title && (
                 <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2">
@@ -83,7 +84,11 @@ export default function Header({ onTryNowClick, buttonText = "Try Now", buttonHr
                 </div>
               )}
               <div className="flex justify-end">
-                {onButtonClick ? (
+                {isComingSoon ? (
+                  <span className="rounded-full px-4 py-2 text-[13px] font-medium ring-1 ring-[var(--ring-white-20)] bg-[color:var(--bg-white-10)] cursor-default select-none">
+                    {buttonText}
+                  </span>
+                ) : onButtonClick ? (
                   <button onClick={onButtonClick} className="rounded-full px-4 py-2 text-[13px] font-medium shadow-[inset_0_-4px_12px_rgba(0,0,0,0.05)] ring-1 ring-[var(--ring-white-20)] bg-[color:var(--bg-white-10)] hover:bg-[color:var(--bg-white-15)] cursor-pointer">{buttonText}</button>
                 ) : (
                   <Link href={buttonHref} className="rounded-full px-4 py-2 text-[13px] font-medium shadow-[inset_0_-4px_12px_rgba(0,0,0,0.05)] ring-1 ring-[var(--ring-white-20)] bg-[color:var(--bg-white-10)] hover:bg-[color:var(--bg-white-15)]">{buttonText}</Link>
@@ -101,11 +106,11 @@ export default function Header({ onTryNowClick, buttonText = "Try Now", buttonHr
           className={`absolute inset-x-0 top-2 sm:top-3 z-50 ${showPill ? 'pointer-events-auto' : 'pointer-events-none'}`}
           style={{ willChange: 'opacity' }}
         >
-          <div className={`mx-auto ring-1 ring-[var(--ring-black-10)] backdrop-blur-md bg-[color:var(--bg-white-90)] rounded-full px-4 py-2 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ${title ? 'w-11/12 sm:w-10/12 md:w-8/12 lg:w-3/5' : 'w-11/12 sm:w-10/12 md:w-7/12 lg:w-1/2'}`}>
+          <div className={`mx-auto ring-1 ring-[var(--ring-black-10)] backdrop-blur-md bg-[color:var(--bg-white-90)] rounded-full px-2 pl-4 py-2 shadow-[0_8px_30px_rgba(0,0,0,0.08)] ${title ? 'w-11/12 sm:w-10/12 md:w-8/12 lg:w-3/5' : 'w-11/12 sm:w-10/12 md:w-7/12 lg:w-1/2'}`}>
             <div className="flex items-center justify-between" style={{ color: 'var(--text-primary)' }}>
               <Link href="/" className="flex items-center gap-2 hover:underline">
                 <img src="/paper.svg" alt="Paper logo" width={22} height={22} className="block" />
-                <span className="text-[17px] font-bold tracking-tight">PREreview</span>
+                <span className="text-[17px] font-bold tracking-tight">PaperReviewer</span>
               </Link>
               {title && (
                 <div className="flex-1 text-center mx-8 flex items-center justify-center gap-2">
@@ -144,23 +149,30 @@ export default function Header({ onTryNowClick, buttonText = "Try Now", buttonHr
                 </div>
               )}
               <div className="flex justify-end">
-                  {onButtonClick ? (
-                    <button
-                      onClick={onButtonClick}
-                      className="rounded-full px-4 py-2 text-[13px] font-medium shadow-[inset_0_-4px_12px_rgba(0,0,0,0.05)] cursor-pointer"
-                      style={{ backgroundColor: 'var(--progress-blue)', color: 'var(--color-white)'}}
-                    >
-                      {buttonText}
-                    </button>
-                  ) : (
-                    <Link
-                      href={buttonHref}
-                      className="rounded-full px-4 py-2 text-[13px] font-medium shadow-[inset_0_-4px_12px_rgba(0,0,0,0.05)]"
-                      style={{ backgroundColor: 'var(--progress-blue)', color: 'var(--color-white)'}}
-                    >
-                      {buttonText}
-                    </Link>
-                  )}
+                {isComingSoon ? (
+                  <span
+                    className="rounded-full px-4 py-2 text-[13px] font-medium"
+                    style={{ backgroundColor: 'var(--progress-blue)', color: 'var(--color-white)' }}
+                  >
+                    {buttonText}
+                  </span>
+                ) : onButtonClick ? (
+                  <button
+                    onClick={onButtonClick}
+                    className="rounded-full px-4 py-2 text-[13px] font-medium shadow-[inset_0_-4px_12px_rgba(0,0,0,0.05)] cursor-pointer"
+                    style={{ backgroundColor: 'var(--progress-blue)', color: 'var(--color-white)'}}
+                  >
+                    {buttonText}
+                  </button>
+                ) : (
+                  <Link
+                    href={buttonHref}
+                    className="rounded-full px-4 py-2 text-[13px] font-medium shadow-[inset_0_-4px_12px_rgba(0,0,0,0.05)]"
+                    style={{ backgroundColor: 'var(--progress-blue)', color: 'var(--color-white)'}}
+                  >
+                    {buttonText}
+                  </Link>
+                )}
               </div>
             </div>
           </div>
