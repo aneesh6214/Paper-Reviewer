@@ -20,9 +20,9 @@ export default function Home() {
       {/* Global fixed header above all sections */}
       <Header buttonHref="#" />
       {/* New full-bleed hero with background image and fades */}
-      <section className="relative isolate overflow-hidden min-h-[85vh]">
+      <section className="relative isolate overflow-hidden min-h-[96vh]">
         {/* Background wrapper with image and fades */}
-        <div className="absolute inset-x-0 top-0 -z-10 h-[85vh] w-full">
+        <div className="absolute inset-x-0 top-0 -z-10 h-[96vh] w-full">
           <img src="/landing-bg.jpg" alt="Hero background" className="absolute inset-0 h-full w-full object-cover" />
           {/* Top black fade for header readability */}
           <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-[var(--overlay-strong)] via-[var(--overlay-mid)] to-transparent" />
@@ -31,7 +31,7 @@ export default function Home() {
         </div>
 
         {/* Hero content */}
-        <div className="relative z-10 mx-auto max-w-5xl px-6 sm:px-8 pt-28 pb-4 text-center">
+        <div className="relative z-10 mx-auto max-w-5xl px-6 sm:px-8 pt-36 pb-4 text-center">
           <motion.h1
             className="text-[88px] sm:text-[96px] font-medium tracking-tight text-white"
             initial={{ opacity: 0, y: 32 }}
@@ -75,22 +75,22 @@ export default function Home() {
             <div className="mx-auto max-w-5xl">
               <LogoMarquee />
             </div>
-            <div className="mt-16">
+            {/* <div className="mt-16">
               <FeatureShowcase />
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
       <footer className="border-t border-black/10 bg-white/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-5xl flex-col gap-2 px-6 py-6 text-xs sm:flex-row sm:items-center sm:justify-between sm:text-sm" style={{ color: 'var(--text-secondary)' }}>
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
+        <div className="mx-auto flex max-w-[1600px] flex-col gap-1 px-32 py-2 text-[11px] sm:flex-row sm:items-center sm:justify-between sm:text-xs" style={{ color: 'var(--text-secondary)' }}>
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4">
             <a href="https://arxiv.org/abs/2412.11948" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">
               Powered by OpenReviewer
             </a>
             <span>Built with Llama</span>
           </div>
           <a href="mailto:mypapergrader@gmail.com" className="hover:text-black transition-colors">
-            Contact Support
+            Contact Us
           </a>
         </div>
       </footer>
