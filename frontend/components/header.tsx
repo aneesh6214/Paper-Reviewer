@@ -122,9 +122,6 @@ export default function Header({ onTryNowClick, buttonText = "Coming Soon!", but
                         window.dispatchEvent(new CustomEvent('showWelcomePopup'));
                       }}
                       className="cursor-pointer outline-none p-1 rounded-full transition-colors"
-                      style={{
-                        ':hover': { backgroundColor: 'var(--gray-100)' }
-                      }}
                       onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--gray-50)'}
                       onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                       title="Show help"
