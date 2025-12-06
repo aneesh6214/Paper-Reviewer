@@ -1,40 +1,61 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Header from "../../components/header";
 import { useRouter } from "next/navigation";
-import ScoreSummary, { ScoreCategory } from "../../components/results/ScoreSummary";
-import ResultsDocument from "../../components/results/ResultsDocument";
-import FeedbackPanel, { FeedbackItem } from "../../components/results/FeedbackPanel";
+import Header from "../../components/header";
+import {
+  ScoreSummary,
+  ResultsDocument,
+  FeedbackPanel,
+  type ScoreCategory,
+  type FeedbackItem,
+  type Paragraph,
+} from "../../components/results";
 
-type StoredScorecard = { id: string; title: string; isNumeric?: boolean };
+// Default categories: 2 numeric (show score), 2 non-numeric (show info icon)
+const DEFAULT_CATEGORIES: ScoreCategory[] = [
+  { 
+    id: 'clarity', 
+    title: 'Clarity', 
+    isNumeric: true, 
+    score: 7, 
+    description: 'The paper demonstrates clear writing with well-structured arguments. Key concepts are explained adequately, though some technical sections could benefit from additional context for broader audiences.' 
+  },
+  { 
+    id: 'novelty', 
+    title: 'Novelty', 
+    isNumeric: true, 
+    score: 8, 
+    description: 'The approach presents incremental improvements over existing methods. While not groundbreaking, the contributions add meaningful value to the field and address practical limitations of prior work.' 
+  },
+  { 
+    id: 'methodology', 
+    title: 'Methodology', 
+    isNumeric: false, 
+    description: 'The experimental design follows standard practices in the field. Consider adding ablation studies to isolate the impact of individual components and strengthen the validity of your claims.' 
+  },
+  { 
+    id: 'reproducibility', 
+    title: 'Reproducibility', 
+    isNumeric: false, 
+    description: 'Code and data availability are mentioned but not fully detailed. Providing a public repository with clear documentation would significantly enhance the reproducibility of your results.' 
+  },
+];
 
 export default function ResultsPage() {
   const router = useRouter();
   const [fileName, setFileName] = useState<string | null>(null);
-  const [categories, setCategories] = useState<ScoreCategory[]>([]);
+  const [categories, setCategories] = useState<ScoreCategory[]>(DEFAULT_CATEGORIES);
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem('reviewScorecards');
       const storedName = localStorage.getItem('reviewFileName');
       if (storedName) setFileName(storedName);
-      if (stored) {
-        const parsed: StoredScorecard[] = JSON.parse(stored);
-        // For now, generate placeholder scores only for numeric categories
-        const cats: ScoreCategory[] = parsed
-          .filter((c) => c.isNumeric)
-          .map((c, i) => ({ id: c.id, title: c.title || `Category ${i+1}`, score: 5 }));
-        setCategories(cats);
-      } else {
-        setCategories([
-          { id: 'cat1', title: 'Category', score: 5 },
-          { id: 'cat2', title: 'Category', score: 5 },
-          { id: 'cat3', title: 'Category', score: 5 },
-          { id: 'cat4', title: 'Category', score: 5 },
-        ]);
-      }
-    } catch {}
+      // For now, always use default categories until backend integration
+      // Future: parse localStorage or API response here
+    } catch {
+      // Silently ignore localStorage errors
+    }
   }, []);
 
   const feedbackItems: FeedbackItem[] = useMemo(() => ([
@@ -49,7 +70,7 @@ export default function ResultsPage() {
   const [selectedId, setSelectedId] = useState<string | null>(feedbackItems[0]?.id ?? null);
   const [expanded, setExpanded] = useState<boolean>(false);
 
-  const paragraphs = useMemo(() => ([
+  const paragraphs: Paragraph[] = useMemo(() => ([
     [
       { text: 'Consequat nostrud exercitation aute ullamco reprehenderit elit adipisicing culpa non eiusmod veniam nostrud et. ', highlightId: 'c1' },
       { text: 'Amet adipisicing ea nostrud. Aliquip dolor cupidatat qui aliqua eu adipisicing veniam ex excepteur sunt est ea aliquip. Incididunt esse pariatur nisi consequat in incididunt.' }
